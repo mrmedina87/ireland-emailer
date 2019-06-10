@@ -48,7 +48,7 @@ const gabiMailOptions = {
 
 console.log('Before job instantiation');
 
-const job = new CronJob('15 02 * * *', async function() {
+const job = new CronJob('21 02 * * *', async function() {
   // const job = new CronJob(process.env.time, async function() {
   const d = new Date();
   console.log('It\'s happening, time:', d);
