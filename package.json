@@ -1,0 +1,20 @@
+{
+  "name": "ireland-emailer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "email",
+    "wh",
+    "ireland"
+  ],
+  "author": "nano",
+  "license": "ISC",
+  "dependencies": {
+    "cron": "^1.7.1",
+    "node-mailer": "^0.1.1"
+  }
+}
