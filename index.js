@@ -27,8 +27,7 @@ Saludos.
 Maria Gabriela Torres`,
 };
 
-const toEmail = 'm_medina87@hotmail.com';
-// const toEmail = 'nano.medina87@gmail.com';
+const { toEmail } = process.env;
 
 const nanoSmtpTransport = nodemailer.createTransport(nanoOptions);
 const gabiSmtpTransport = nodemailer.createTransport(gabiOptions);
@@ -49,20 +48,34 @@ const gabiMailOptions = {
 
 console.log('Before job instantiation');
 
-const job = new CronJob('43 01 * * *', async function() {
+const job = new CronJob('15 02 * * *', async function() {
+  // const job = new CronJob(process.env.time, async function() {
   const d = new Date();
   console.log('It\'s happening, time:', d);
   new Promise((resolve, reject) => {
-    nanoSmtpTransport.sendMail(nanoMailOptions, (error, info) => {
-      console.log('nodemailer: sendMail info');
-      console.log(info);
-      if (error) {
-        console.log('nodemailer: error');
-        console.log(error);
-        reject(new Error('There was an error trying to send your message. Please try again later.'));
-      }
-      resolve();
-    });
+    if(process.env.sender === 'nano') {
+      nanoSmtpTransport.sendMail(nanoMailOptions, (error, info) => {
+        console.log('nodemailer: sendMail info');
+        console.log(info);
+        if (error) {
+          console.log('nodemailer: error');
+          console.log(error);
+          reject(new Error('There was an error trying to send your message. Please try again later.'));
+        }
+        resolve();
+      });
+    } else {
+      gabiSmtpTransport.sendMail(gabiMailOptions, (error, info) => {
+        console.log('nodemailer: sendMail info');
+        console.log(info);
+        if (error) {
+          console.log('nodemailer: error');
+          console.log(error);
+          reject(new Error('There was an error trying to send your message. Please try again later.'));
+        }
+        resolve();
+      });
+    }
   });
 }, null, true, 'America/Argentina/Tucuman');
 
